@@ -1,0 +1,5 @@
+2025-07-19 09:21:29,650 - INFO - Auto-moved: goldtest.jpeg → /Users/raphaeldahomay/Downloads/IMAGE/2025/07
+2025-07-19 09:23:00,119 - INFO - Watchdog stopped by user
+2025-07-19 09:23:02,493 - INFO - Starting watchdog on: /Users/raphaeldahomay/Downloads
+2025-07-19 09:55:40,084 - INFO - Watchdog stopped by user
+2025-07-19 09:55:42,106 - INFO - Starting watchdog on: /Users/raphaeldahomay/Downloads

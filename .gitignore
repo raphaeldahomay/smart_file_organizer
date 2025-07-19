@@ -1,0 +1,63 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env/
+.venv/
+venv/
+ENV/
+env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Jupyter notebook files
+*.ipynb
+
+# VS Code settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# Logs
+*.log
+
+# Test / coverage reports
+.coverage
+htmlcov/
+.tox/
+.noseids
+.pytest_cache/
+.test/
+
+# mypy, pylint, etc.
+.mypy_cache/
+.pyre/
+.pytype/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Custom file organizer output (adjust as needed)
+sorted_files/
+organized_output/
+INODE_*/  # If your script creates this kind of folder
+
+# Ignore compiled files or temp output
+*.tmp
+*.bak
+*.swp
+
+# Environment variables / secrets
+.env
+.env.*
