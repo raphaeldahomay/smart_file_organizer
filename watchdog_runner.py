@@ -8,48 +8,72 @@ from watchdog.events import FileSystemEventHandler
 from file_rules import get_file_type, get_file_date
 from delete_empty import delete_empty_folders
 
+# ------------- Logging Setup -------------
+logging.basicConfig(
+    filename='log.txt',
+    filemode='a',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
+# ------------- Utility: Wait for stable file -------------
+def wait_for_complete_write(file_path, timeout=10):
+    previous_size = -1
+    start_time = time.time()
+
+    while time.time() - start_time < timeout:
+        try:
+            current_size = file_path.stat().st_size
+            if current_size == previous_size:
+                return True
+            previous_size = current_size
+            time.sleep(0.5)
+        except FileNotFoundError:
+            time.sleep(0.5)
+    return False
+
+# ------------- File Handler -------------
 class WatchHandler(FileSystemEventHandler):
     def __init__(self, target, clean_empty):
         self.target = Path(target)
         self.clean_empty = clean_empty
 
     def on_created(self, event):
-        if not event.is_directory:
-            Path("log.txt").write_text("")
-            file_path = Path(event.src_path)
+        if event.is_directory:
+            return
 
-            # Skip temp or hidden system files
-            if file_path.name.startswith(".") or file_path.suffix in {".crdownload", ".part", ".tmp"}:
-                logging.info(f"Skipped temp/incomplete file: {file_path.name}")
-                return
+        file_path = Path(event.src_path)
 
-            time.sleep(1)
+        # Skip temp/incomplete files
+        if file_path.name.startswith(".") or file_path.suffix in {".crdownload", ".part", ".tmp"}:
+            logging.info(f"Skipped temp/incomplete file: {file_path.name}")
+            return
 
-            logging.info(f"New file detected: {file_path}")
-            try:
-                organize_single_file(file_path, self.target, self.clean_empty)
-            except Exception as e:
-                logging.error(f"Failed to organize new file {file_path}: {e}")
-                
+        if not wait_for_complete_write(file_path):
+            logging.warning(f"File not stable after waiting: {file_path}")
+            return
 
+        logging.info(f"New file detected: {file_path}")
 
+        try:
+            organize_single_file(file_path, self.target, self.clean_empty)
+        except Exception as e:
+            logging.error(f"Failed to organize new file {file_path}: {e}")
 
+# ------------- Organize Logic -------------
 def organize_single_file(file_path, base_target, clean_empty=False):
     if not file_path.exists():
         return
-    
-    if file_path == '.':
-        file_path = str(Path.cwd())
-    file_path = Path(file_path).resolve()
 
-    # Get MIME type and high-level category
+    file_path = file_path.resolve()
+
     mime_type, file_type = get_file_type(file_path)
+    logging.info(f"MIME: {mime_type}, Category: {file_type}")
 
-    # Optionally skip temp or sensitive files
     if file_type == "SKIP":
-        logging.info(f"Skipped temp/cache file: {file_path.name}")
+        logging.info(f"Skipped by rule: {file_path.name}")
         return
+
     year, month = get_file_date(file_path)
     destination = base_target / file_type / year / month
     destination.mkdir(parents=True, exist_ok=True)
@@ -63,25 +87,24 @@ def organize_single_file(file_path, base_target, clean_empty=False):
     if clean_empty:
         delete_empty_folders(base_target)
 
-
-
+# ------------- Main Watchdog Runner -------------
 def main():
-    parser = argparse.ArgumentParser(description="Watchdog Mode - Smart File Organizer")
-    parser.add_argument("path", help="Path to the folder to watch")
-    parser.add_argument("--e", action="store_true", help="Delete empty folders if found")
+    parser = argparse.ArgumentParser(description="Watchdog File Organizer")
+    parser.add_argument("path", help="Path to watch")
+    parser.add_argument("--clean-empty", action="store_true", help="Delete empty folders after move")
 
     args = parser.parse_args()
-    path = Path(args.path)
+    path = Path(args.path).resolve()
 
     if not path.exists() or not path.is_dir():
         logging.error(f"Invalid path: {path}")
         print(f"Error: '{path}' is not a valid directory.")
         return
 
-    logging.info(f"Starting watchdog on: {path}")
-    event_handler = WatchHandler(path, clean_empty=args.e)
+    logging.info(f"Started watchdog on: {path}")
+    event_handler = WatchHandler(path, clean_empty=args.clean_empty)
     observer = Observer()
-    observer.schedule(event_handler, path, recursive=True)
+    observer.schedule(event_handler, str(path), recursive=True)
     observer.start()
 
     try:
@@ -93,6 +116,6 @@ def main():
 
     observer.join()
 
-
 if __name__ == "__main__":
     main()
+

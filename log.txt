@@ -1,5 +1,16 @@
-2025-07-19 09:21:29,650 - INFO - Auto-moved: goldtest.jpeg → /Users/raphaeldahomay/Downloads/IMAGE/2025/07
-2025-07-19 09:23:00,119 - INFO - Watchdog stopped by user
-2025-07-19 09:23:02,493 - INFO - Starting watchdog on: /Users/raphaeldahomay/Downloads
-2025-07-19 09:55:40,084 - INFO - Watchdog stopped by user
-2025-07-19 09:55:42,106 - INFO - Starting watchdog on: /Users/raphaeldahomay/Downloads
+2025-07-20 08:42:16,534 - INFO - New file detected: /Users/raphaeldahomay/Downloads/little_navy.jpg
+2025-07-20 08:42:16,560 - INFO - Auto-moved: little_navy.jpg → /Users/raphaeldahomay/Downloads/IMAGE/2025/07
+2025-07-21 16:30:34,913 - INFO - Watchdog stopped by user
+2025-07-21 16:30:39,658 - INFO - Started watchdog on: /Users/raphaeldahomay/Downloads
+2025-07-21 16:31:22,556 - INFO - Skipped temp/incomplete file: .company.thebrowser.Browser.UqKz3J
+2025-07-21 16:31:22,836 - INFO - Skipped temp/incomplete file: Unconfirmed 996302.crdownload
+2025-07-21 16:31:29,182 - INFO - New file detected: /Users/raphaeldahomay/Downloads/Mobb Deep - The Illest.mp3
+2025-07-21 16:31:29,207 - INFO - MIME: audio/mpeg, Category: AUDIO
+2025-07-21 16:31:29,209 - INFO - Auto-moved: Mobb Deep - The Illest.mp3 → /Users/raphaeldahomay/Downloads/AUDIO/2025/07
+2025-07-21 16:31:39,288 - WARNING - File not stable after waiting: /Users/raphaeldahomay/Downloads/Mobb Deep - The Illest.mp3
+2025-07-21 16:31:52,941 - INFO - New file detected: /Users/raphaeldahomay/Downloads/AUDIO/2025/07/la_bille_bleue_masterized.wav
+2025-07-21 16:31:52,965 - INFO - MIME: audio/x-wav, Category: AUDIO
+2025-07-21 16:31:52,966 - INFO - Auto-moved: la_bille_bleue_masterized.wav → /Users/raphaeldahomay/Downloads/AUDIO/2025/07
+2025-07-21 16:31:53,472 - INFO - New file detected: /Users/raphaeldahomay/Downloads/AUDIO/2025/07/Old School Boom Bap Piano.mp3
+2025-07-21 16:31:53,491 - INFO - MIME: audio/mpeg, Category: AUDIO
+2025-07-21 16:31:53,492 - INFO - Auto-moved: Old School Boom Bap Piano.mp3 → /Users/raphaeldahomay/Downloads/AUDIO/2025/07
